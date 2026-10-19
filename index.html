@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Padankan Anggota Badan | Match the Body Part</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts for Preschool Fun & High Readability -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-candy-pink: #FF3385;
+      --primary-candy-cyan: #00D2FF;
+      --primary-candy-orange: #FF7700;
+      --primary-candy-yellow: #FFD200;
+      --primary-candy-purple: #8B3DFF;
+      --primary-candy-lime: #44E044;
+      --primary-deep-navy: #16103C;
+    }
+
+    * {
+      font-family: 'Fredoka', 'Quicksand', sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Subtle pulsing for interactive target marker */
+    @keyframes gentlePulse {
+      0%, 100% { transform: scale(1); opacity: 0.92; }
+      50% { transform: scale(1.16); opacity: 1; }
+    }
+
+    /* Mascot Idle breathing bounce */
+    @keyframes mascotBreathe {
+      0%, 100% { transform: translateY(0px) scale(1, 1); }
+      50% { transform: translateY(-4px) scale(1.02, 0.98); }
+    }
+
+    /* Wrong answer wobble */
+    @keyframes softWobble {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      20% { transform: translateX(-12px) rotate(-6deg); }
+      40% { transform: translateX(10px) rotate(5deg); }
+      60% { transform: translateX(-8px) rotate(-4deg); }
+      80% { transform: translateX(6px) rotate(2deg); }
+    }
+
+    /* Celebration snap & pop */
+    @keyframes snapBounce {
+      0% { transform: scale(0.6) rotate(-10deg); opacity: 0.7; }
+      60% { transform: scale(1.22) rotate(4deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    /* Sparkle float */
+    @keyframes floatParticle {
+      0% { transform: translateY(0) scale(0.6); opacity: 0.2; }
+      50% { opacity: 0.8; transform: translateY(-25px) scale(1.1); }
+      100% { transform: translateY(-50px) scale(0.4); opacity: 0; }
+    }
+
+    .pulse-target {
+      animation: gentlePulse 1.8s infinite ease-in-out;
+    }
+
+    .mascot-breathing {
+      animation: mascotBreathe 3.4s infinite ease-in-out;
+      transform-origin: bottom center;
+    }
+
+    .wobble-feedback {
+      animation: softWobble 0.55s ease-in-out;
+    }
+
+    .snap-pop {
+      animation: snapBounce 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Custom 3D styled button appearance with gloss reflection */
+    .btn-3d {
+      box-shadow: 0 8px 0 rgba(0,0,0,0.18), 0 12px 20px rgba(0,0,0,0.15);
+      transition: all 0.12s ease-out;
+    }
+    .btn-3d:active {
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.2), 0 6px 10px rgba(0,0,0,0.12);
+    }
+
+    /* Glowing asset tray cards */
+    .card-tray {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border: 3.5px solid #FFED4A;
+      box-shadow: 0 10px 25px rgba(139, 61, 255, 0.22), inset 0 2px 4px rgba(255,255,255,0.9);
+    }
+
+    /* Responsive Body Discovery Gallery Background */
+    .bg-discovery-gallery {
+      background-image: url('https://imglink.cc/cdn/DO8E2OKGUY.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    @media (orientation: portrait) {
+      .bg-discovery-gallery {
+        background-image: url('https://imglink.cc/cdn/ZeyIIkX1y5.jpeg');
+      }
+    }
+
+    /* Asset Image Smooth Hover & Render */
+    .asset-img {
+      object-fit: contain;
+      pointer-events: none;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.12));
+    }
+
+    /* Screen transition smoothness */
+    .view-screen {
+      transition: opacity 0.28s ease, transform 0.28s ease;
+    }
+    .view-hidden {
+      display: none !important;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Hide scrollbars completely while keeping touch scrolling functional */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="relative w-full h-full overflow-hidden bg-slate-900 text-slate-800 select-none flex flex-col justify-between">
+
+  <!-- ========================================================================= -->
+  <!-- 12 & 13. CINEMATIC BACKGROUND: Body Discovery Gallery (Portrait & Landscape) -->
+  <!-- ========================================================================= -->
+  <div id="bgGalleryContainer" class="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden bg-discovery-gallery" aria-hidden="true">
+    <!-- Subtle Ambient Vignette & Floating SVG Discovery Sparks -->
+    <div class="absolute inset-0 bg-gradient-to-b from-purple-950/20 via-transparent to-purple-950/50"></div>
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" class="w-full h-full opacity-70">
+      <defs>
+        <radialGradient id="sparkleGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#00FFF2" stop-opacity="0.9" />
+          <stop offset="100%" stop-color="#00FFF2" stop-opacity="0" />
+        </radialGradient>
+      </defs>
+      <!-- Floating Ambient Sparkles -->
+      <circle cx="340" cy="280" r="14" fill="url(#sparkleGlow)">
+        <animate attributeName="cy" values="280;240;280" dur="4.2s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.3;0.9;0.3" dur="3s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="1120" cy="320" r="18" fill="url(#sparkleGlow)">
+        <animate attributeName="cy" values="320;270;320" dur="5s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.2;0.85;0.2" dur="3.8s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="720" cy="200" r="12" fill="#FFED4A" opacity="0.6">
+        <animate attributeName="cy" values="200;170;200" dur="4s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2.8s" repeatCount="indefinite" />
+      </circle>
+    </svg>
+  </div>
+
+  <!-- Top Navigation & Controls Bar -->
+  <header class="shrink-0 relative z-30 w-full px-3 py-2 md:px-6 md:py-3 flex items-center justify-between bg-white/75 backdrop-blur-md border-b-4 border-amber-300 shadow-lg">
+    <!-- Brand / Return Home -->
+    <button id="btnHeaderHome" class="flex items-center gap-2 group cursor-pointer focus:outline-none focus:ring-4 focus:ring-amber-400 rounded-2xl p-1" aria-label="Laman Utama / Home">
+      <div class="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-tr from-pink-500 to-amber-400 flex items-center justify-center shadow-md transform group-hover:scale-105 transition-transform">
+        <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </div>
+      <div class="text-left hidden sm:block">
+        <h1 id="lblHeaderBrand" class="text-lg md:text-xl font-bold tracking-tight text-purple-900 leading-tight">Anggota Badan Adventure</h1>
+        <p id="lblHeaderSub" class="text-xs font-semibold text-pink-600">Padankan Anggota Badan</p>
+      </div>
+    </button>
+
+    <!-- Top Right Utilities (Audio, Language, How-To, Profile) -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <!-- Audio Toggle -->
+      <button id="btnAudioToggle" class="w-10 h-10 md:w-11 md:h-11 rounded-2xl bg-amber-400 hover:bg-amber-300 text-purple-950 font-bold flex items-center justify-center btn-3d focus:outline-none focus:ring-4 focus:ring-pink-400" aria-label="Bisu Bunyi / Sound Toggle">
+        <svg id="iconAudioOn" class="w-5 h-5 text-purple-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        </svg>
+        <svg id="iconAudioOff" class="w-5 h-5 text-purple-950 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <line x1="23" y1="9" x2="17" y2="15"/>
+          <line x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
+      </button>
+
+      <!-- Language Switcher Toggle (BM <-> EN) -->
+      <button id="btnLangToggle" class="px-3 py-1.5 md:px-4 md:py-2 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-white font-extrabold text-sm md:text-base btn-3d focus:outline-none focus:ring-4 focus:ring-yellow-300" aria-label="Tukar Bahasa / Switch Language">
+        <span id="lblLangActive">EN</span>
+      </button>
+
+      <!-- How to play visual guide trigger -->
+      <button id="btnHowToPlay" class="w-10 h-10 md:w-11 md:h-11 rounded-2xl bg-pink-500 hover:bg-pink-400 text-white font-bold flex items-center justify-center btn-3d focus:outline-none focus:ring-4 focus:ring-yellow-300" aria-label="Cara Main / How to Play">
+        <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Active Content Stage (Contains 5 main views) with bottom padding for fixed footer -->
+  <main id="appStage" class="relative z-10 flex-1 min-h-0 w-full max-w-6xl mx-auto flex flex-col justify-center items-center p-2 sm:p-4 pb-12 sm:pb-14 overflow-y-auto no-scrollbar">
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 1: HOME SCREEN (Anggota Badan Adventure / Body Explorer Adventure)   -->
+    <!-- ========================================================================= -->
+    <section id="viewHome" class="view-screen w-full flex flex-col items-center justify-center py-4 my-auto">
+      <div class="w-full max-w-lg bg-white/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 border-4 border-amber-300 shadow-2xl text-center relative overflow-hidden">
+        <!-- Floating decorative corner badge -->
+        <div class="absolute -top-10 -right-10 w-28 h-28 bg-gradient-to-br from-yellow-300 to-pink-500 rounded-full opacity-40 blur-xl pointer-events-none"></div>
+
+        <!-- Mascot Welcome Illustration in Home -->
+        <div id="homeMascotSlot" class="w-28 h-28 mx-auto mb-3 transform hover:scale-105 transition-transform">
+          <!-- Populated dynamically via Asset Library (Asset #20: Explorer Mascot) -->
+        </div>
+
+        <h2 id="homeTitle" class="text-3xl sm:text-4xl font-black text-purple-950 tracking-tight mb-1">
+          Anggota Badan Adventure
+        </h2>
+        <p id="homeSubtitle" class="text-base sm:text-lg font-bold text-pink-600 mb-6">
+          Padankan Anggota Badan
+        </p>
+
+        <!-- Navigation Buttons Stack -->
+        <div class="flex flex-col gap-3.5 w-full">
+          <button id="btnStartPlaying" class="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-white font-extrabold text-xl btn-3d focus:outline-none focus:ring-4 focus:ring-yellow-300 flex items-center justify-center gap-3">
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            <span id="lblBtnStart">Mula Main</span>
+          </button>
+
+          <div class="grid grid-cols-2 gap-3">
+            <button id="btnNavProfile" class="py-3 px-3 rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 hover:to-indigo-500 text-white font-bold text-base btn-3d focus:outline-none focus:ring-4 focus:ring-yellow-300 flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              <span id="lblBtnProfile">Profil Pemain</span>
+            </button>
+
+            <button id="btnNavFamily" class="py-3 px-3 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-400 hover:to-rose-500 text-white font-bold text-base btn-3d focus:outline-none focus:ring-4 focus:ring-yellow-300 flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span id="lblBtnFamily">Kod Keluarga</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <button id="btnNavStudent" class="py-3 px-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-bold text-base btn-3d focus:outline-none focus:ring-4 focus:ring-yellow-300 flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+              <span id="lblBtnStudent">Profil Murid</span>
+            </button>
+
+            <button id="btnNavCollection" class="py-3 px-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-base btn-3d focus:outline-none focus:ring-4 focus:ring-yellow-300 flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M7 7h10v10H7z"/>
+              </svg>
+              <span id="lblBtnCollection">Koleksi</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 2: SESSION SELECTOR SCREEN (Choose a Game / Pilih Permainan)        -->
+    <!-- ========================================================================= -->
+    <section id="viewSessionSelect" class="view-screen view-hidden w-full flex flex-col items-center justify-center py-4 my-auto">
+      <div class="w-full max-w-lg bg-white/92 backdrop-blur-md rounded-3xl p-6 sm:p-8 border-4 border-amber-300 shadow-2xl text-center">
+        <!-- Explorer Clipboard Decorative Asset (#31) -->
+        <div id="sessionClipboardSlot" class="w-20 h-20 mx-auto mb-2"></div>
+
+        <h2 id="lblChooseGame" class="text-3xl font-black text-purple-950 mb-2">
+          Pilih Permainan
+        </h2>
+        <p id="lblChooseSub" class="text-sm font-semibold text-slate-600 mb-6">
+          Pilih bilangan soalan yang ingin diterokai!
+        </p>
+
+        <!-- Session Options (5, 10, 20, Free Play) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <button class="btnSessionOption py-4 px-4 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-black text-xl btn-3d focus:outline-none focus:ring-4 focus:ring-yellow-300" data-mode="5">
+            <span class="block text-2xl font-black">5</span>
+            <span class="text-sm font-bold tracking-wide" data-i18n-key="opt5Q">5 Soalan</span>
+          </button>
+
+          <button class="btnSessionOption py-4 px-4 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-500 text-white font-black text-xl btn-3d focus:outline-none focus:ring-4 focus:ring-yellow-300" data-mode="10">
+            <span class="block text-2xl font-black">10</span>
+            <span class="text-sm font-bold tracking-wide" data-i18n-key="opt10Q">10 Soalan</span>
+          </button>
+
+          <button class="btnSessionOption py-4 px-4 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 text-white font-black text-xl btn-3d focus:outline-none focus:ring-4 focus:ring-yellow-300" data-mode="20">
+            <span class="block text-2xl font-black">20</span>
+            <span class="text-sm font-bold tracking-wide" data-i18n-key="opt20Q">20 Soalan</span>
+          </button>
+
+          <button class="btnSessionOption py-4 px-4 rounded-2xl bg-gradient-to-r from-fuchsia-500 to-pink-600 text-white font-black text-xl btn-3d focus:outline-none focus:ring-4 focus:ring-yellow-300" data-mode="free">
+            <span class="block text-2xl font-black">∞</span>
+            <span class="text-sm font-bold tracking-wide" data-i18n-key="optFree">Main Bebas</span>
+          </button>
+        </div>
+
+        <button id="btnBackToHomeFromSession" class="mt-6 px-6 py-2.5 rounded-2xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-sm focus:outline-none">
+          <span id="lblBackHome">Kembali ke Laman Utama</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 3: GAMEPLAY SCREEN (Pointer Drag-to-Target & Accessible Keyboard)   -->
+    <!-- ========================================================================= -->
+    <section id="viewGameplay" class="view-screen view-hidden w-full h-full flex flex-col justify-between items-center py-1 sm:py-2">
+
+      <!-- Top Question Banner & Progress HUD -->
+      <div class="w-full flex flex-wrap items-center justify-between gap-2 px-3 py-2 bg-white/90 backdrop-blur-md rounded-2xl border-2 border-amber-300 shadow-md">
+        <!-- Progress / Question indicator -->
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold text-sm" id="hudProgressBadge">
+            Q1
+          </div>
+          <span id="hudProgressText" class="text-sm md:text-base font-extrabold text-purple-900">Soalan 1 / 5</span>
+        </div>
+
+        <!-- Central Playful Instruction Bubble -->
+        <div class="order-3 sm:order-2 w-full sm:w-auto text-center px-3 py-1 bg-amber-100 rounded-xl border border-amber-300">
+          <p id="lblInstruction" class="text-sm md:text-base font-black text-pink-600 tracking-wide">
+            Seret hidung ke tempat yang betul!
+          </p>
+        </div>
+
+        <!-- Score Badge -->
+        <div class="order-2 sm:order-3 flex items-center gap-2 bg-emerald-100 px-3 py-1 rounded-xl border border-emerald-300">
+          <span id="lblScoreTitle" class="text-xs font-bold text-emerald-800 uppercase">Skor:</span>
+          <span id="hudScoreVal" class="text-lg font-black text-emerald-600">0</span>
+        </div>
+      </div>
+
+      <!-- Center Active Discovery Zone: Mascot + Child Character with Target Zone -->
+      <div class="relative w-full flex-1 flex flex-row items-center justify-center my-2 max-h-[58vh]">
+
+        <!-- Left Explorer Mascot Station -->
+        <div class="flex flex-col items-center justify-end w-24 sm:w-36 md:w-44 h-full relative z-10 px-1">
+          <!-- Mascot Speech Reaction Balloon -->
+          <div id="mascotBubble" class="mb-1 px-2.5 py-1.5 bg-white/95 rounded-2xl border-2 border-pink-400 shadow-md text-xs sm:text-sm font-bold text-purple-900 text-center opacity-0 transition-opacity duration-300 pointer-events-none">
+            <span id="mascotSpeechText">Hebat!</span>
+          </div>
+
+          <!-- Explorer Mascot Interactive SVG Frame -->
+          <div id="mascotFrame" class="w-20 h-28 sm:w-28 sm:h-36 md:w-36 md:h-48 mascot-breathing transition-all duration-300">
+            <!-- Dynamically populated with Mascot Assets (#20 to #29) -->
+          </div>
+        </div>
+
+        <!-- Center Stage: Child Character Interactive Frame (Large preschool view) -->
+        <div class="relative flex-1 max-w-sm sm:max-w-md h-full flex items-center justify-center">
+          <!-- Backing glow card for child character -->
+          <div class="relative w-full h-full max-h-[52vh] aspect-[3/4] bg-white/70 backdrop-blur-md rounded-3xl border-4 border-purple-200 shadow-xl p-2 flex items-center justify-center overflow-hidden">
+
+            <!-- Child Character Canvas/SVG Container (Boy or Girl) -->
+            <div id="characterStage" class="relative w-full h-full flex items-center justify-center">
+              <!-- Inline Character SVG injected here -->
+            </div>
+
+            <!-- Target Marker Guide Zone (Asset #33 with generous invisible hit area) -->
+            <div id="targetHitArea" class="absolute z-20 transition-all duration-200 flex items-center justify-center cursor-pointer pointer-events-auto"
+                 role="button"
+                 tabindex="0"
+                 aria-label="Sasaran Anggota Badan">
+              <!-- Visual Target Marker Animation (Asset #33) -->
+              <div id="targetMarkerVisual" class="w-16 h-16 sm:w-20 sm:h-20 pulse-target pointer-events-none">
+                <!-- Target Marker SVG -->
+              </div>
+            </div>
+
+            <!-- Correct Snap Visual Overlay -->
+            <div id="snapFeedbackZone" class="absolute z-30 pointer-events-none opacity-0 transition-opacity">
+              <!-- Snapped asset displays here during positive feedback -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Tray: AI-Generated Body-Part Asset Choices -->
+      <div class="w-full relative z-20 px-2 py-2 card-tray rounded-3xl">
+        <div class="flex items-center justify-between mb-1 px-2">
+          <span id="lblTrayTitle" class="text-xs sm:text-sm font-black text-purple-900 tracking-wide">
+            Pilih & Seret Anggota Badan:
+          </span>
+          <span id="lblAccessibleHelp" class="text-[11px] font-semibold text-slate-500 hidden sm:inline">
+            (Boleh tekan kad lalu tekan sasaran)
+          </span>
+        </div>
+
+        <!-- 4 Reusable Body-Part Choice Cards -->
+        <div id="choicesContainer" class="grid grid-cols-4 gap-2 sm:gap-3 w-full">
+          <!-- Choice Slots rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 4: RESULTS SCREEN (Celebration, Score & Accuracy)                   -->
+    <!-- ========================================================================= -->
+    <section id="viewResult" class="view-screen view-hidden w-full flex flex-col items-center justify-center py-4 my-auto">
+      <div class="w-full max-w-md bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 border-4 border-amber-300 shadow-2xl text-center relative overflow-hidden">
+
+        <!-- Mascot Celebration Asset (#29) -->
+        <div id="resultMascotSlot" class="w-32 h-32 mx-auto mb-3 snap-pop"></div>
+
+        <h2 id="lblResultTitle" class="text-3xl font-black text-purple-950 mb-1">
+          Syabas! Anda Berjaya!
+        </h2>
+        <p id="lblResultSub" class="text-sm font-bold text-pink-600 mb-6">
+          Pengembaraan selesai dengan cemerlang!
+        </p>
+
+        <!-- Stats Grid (Score, Accuracy, Questions) -->
+        <div class="grid grid-cols-2 gap-3 mb-6">
+          <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-3">
+            <span id="lblResScore" class="block text-xs font-bold text-amber-800 uppercase">Jumlah Skor</span>
+            <span id="valResScore" class="text-2xl font-black text-amber-600">50</span>
+          </div>
+          <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-3">
+            <span id="lblResAccuracy" class="block text-xs font-bold text-emerald-800 uppercase">Ketepatan</span>
+            <span id="valResAccuracy" class="text-2xl font-black text-emerald-600">100%</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons (Main Lagi / Play Again & Home) -->
+        <div class="flex flex-col gap-3">
+          <button id="btnPlayAgain" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-500 text-white font-extrabold text-lg btn-3d focus:outline-none focus:ring-4 focus:ring-yellow-300 flex items-center justify-center gap-2">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+              <path d="M21 3v5h-5"/>
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+              <path d="M8 16H3v5"/>
+            </svg>
+            <span id="lblBtnPlayAgain">Main Lagi</span>
+          </button>
+
+          <button id="btnResultToHome" class="w-full py-3 rounded-2xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-base btn-3d focus:outline-none">
+            <span id="lblBtnResultHome">Kembali ke Laman Utama</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 5: COLLECTION SCREEN (Shared 41 AI Assets Visual Gallery)           -->
+    <!-- ========================================================================= -->
+    <section id="viewCollection" class="view-screen view-hidden w-full flex flex-col items-center justify-start py-3 h-full max-h-[80vh]">
+      <div class="w-full bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-6 border-4 border-amber-300 shadow-2xl flex flex-col h-full overflow-hidden">
+        <div class="flex items-center justify-between pb-3 border-b-2 border-slate-200">
+          <div>
+            <h2 id="lblCollectionHeading" class="text-2xl font-black text-purple-950">Koleksi Anggota Badan</h2>
+            <p id="lblCollectionSub" class="text-xs font-bold text-slate-500">Terokai aset pembelajaran pengembaraan!</p>
+          </div>
+          <button id="btnCloseCollection" class="px-4 py-2 rounded-2xl bg-pink-500 hover:bg-pink-400 text-white font-bold text-sm btn-3d">
+            <span id="lblBtnCloseCol">Tutup</span>
+          </button>
+        </div>
+
+        <!-- Asset Cards Grid (No asset counts as per requirement) -->
+        <div id="collectionGrid" class="flex-1 overflow-y-auto no-scrollbar grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 pt-4">
+          <!-- Filled dynamically with the exact 41 shared AI assets -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: PLAYER PROFILE / STUDENT PROFILE / FAMILY CODE                     -->
+  <!-- ========================================================================= -->
+  <div id="modalProfile" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 hidden" role="dialog" aria-modal="true">
+    <div class="w-full max-w-lg bg-white rounded-3xl border-4 border-amber-300 shadow-2xl p-6 overflow-y-auto max-h-[90vh]">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <h3 id="lblProfileModalTitle" class="text-2xl font-black text-purple-950">Profil Pemain</h3>
+        <button id="btnCloseProfileModal" class="w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-black flex items-center justify-center" aria-label="Tutup">
+          ✕
+        </button>
+      </div>
+
+      <!-- Profile Form Fields -->
+      <div class="mt-4 space-y-4">
+        <!-- Student Profile (Starts BLANK by default) -->
+        <div>
+          <label id="lblInputStudentName" class="block text-xs font-bold text-purple-900 uppercase mb-1">
+            Profil Murid
+          </label>
+          <input type="text" id="inputStudentName" placeholder="Nama Murid (Biar kosong jika tiada)" class="w-full px-4 py-3 rounded-2xl border-2 border-purple-200 focus:border-purple-600 focus:outline-none text-slate-800 font-semibold" />
+        </div>
+
+        <!-- Family Code (Completely BLANK by default) -->
+        <div>
+          <label id="lblInputFamilyCode" class="block text-xs font-bold text-purple-900 uppercase mb-1">
+            Kod Keluarga
+          </label>
+          <input type="text" id="inputFamilyCode" placeholder="Kod Keluarga (Pilihan)" class="w-full px-4 py-3 rounded-2xl border-2 border-purple-200 focus:border-purple-600 focus:outline-none text-slate-800 font-semibold" />
+        </div>
+
+        <!-- Player Statistics Summary -->
+        <div class="bg-purple-50 rounded-2xl p-4 border border-purple-200 space-y-2">
+          <h4 id="lblStatsHeader" class="text-sm font-black text-purple-950 uppercase border-b border-purple-200 pb-1">Statistik Permainan</h4>
+          <div class="grid grid-cols-2 gap-2 text-xs font-bold text-slate-700">
+            <div><span id="lblStatGames">Permainan Dimainkan:</span> <span id="valStatGames" class="text-purple-700 font-extrabold">0</span></div>
+            <div><span id="lblStatAnswered">Soalan Dijawab:</span> <span id="valStatAnswered" class="text-purple-700 font-extrabold">0</span></div>
+            <div><span id="lblStatCorrect">Jawapan Betul:</span> <span id="valStatCorrect" class="text-purple-700 font-extrabold">0</span></div>
+            <div><span id="lblStatBest">Skor Terbaik:</span> <span id="valStatBest" class="text-purple-700 font-extrabold">0</span></div>
+            <div class="col-span-2"><span id="lblStatAcc">Ketepatan:</span> <span id="valStatAcc" class="text-purple-700 font-extrabold">0%</span></div>
+          </div>
+        </div>
+
+        <!-- Family History / Recent Activity -->
+        <div>
+          <h4 id="lblHistoryTitle" class="text-xs font-bold text-purple-900 uppercase mb-1">Sejarah Keluarga & Aktiviti Terkini</h4>
+          <div id="historyListContainer" class="bg-slate-50 rounded-2xl p-3 border border-slate-200 max-h-28 overflow-y-auto text-xs text-slate-600 space-y-1">
+            <p id="lblEmptyHistory" class="italic text-slate-400">Tiada aktiviti direkodkan lagi.</p>
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <button id="btnSaveProfile" class="w-full py-3 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-500 text-white font-extrabold text-base btn-3d focus:outline-none">
+          <span id="lblBtnSaveProfile">Simpan Profil</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: HOW TO PLAY (Cara Main Animated Visual Demonstration)              -->
+  <!-- ========================================================================= -->
+  <div id="modalHowToPlay" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 hidden" role="dialog" aria-modal="true">
+    <div class="w-full max-w-md bg-white rounded-3xl border-4 border-amber-300 shadow-2xl p-6 text-center">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-200">
+        <h3 id="lblHowToHeading" class="text-2xl font-black text-purple-950">Cara Main</h3>
+        <button id="btnCloseHowToModal" class="w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-black flex items-center justify-center" aria-label="Tutup">
+          ✕
+        </button>
+      </div>
+
+      <!-- Animated Visual Demo Using Genuine Shared AI Assets -->
+      <div class="my-4 p-4 bg-purple-50 rounded-2xl border-2 border-purple-200 relative overflow-hidden flex flex-col items-center">
+        <p id="lblHowToInstruction" class="text-base font-extrabold text-pink-600 mb-3">
+          Seret anggota badan ke tempat yang betul!
+        </p>
+
+        <!-- Visual demonstration animation using supplied assets -->
+        <div class="relative w-48 h-36 flex items-center justify-center">
+          <!-- Target Marker in Demo -->
+          <div class="w-16 h-16 pulse-target">
+            <img src="https://i.postimg.cc/ncBC1VPk/IMG-6331.png" alt="Sasaran" class="w-full h-full object-contain filter drop-shadow-md">
+          </div>
+          <!-- Moving Demo Asset (Nose asset moving towards target) -->
+          <div class="absolute w-12 h-12" style="animation: demoDragMove 3.6s infinite ease-in-out;">
+            <img src="https://imglink.cc/cdn/sObzN8lcwH.png" alt="Hidung" class="w-full h-full object-contain filter drop-shadow-lg">
+          </div>
+        </div>
+        <style>
+          @keyframes demoDragMove {
+            0%, 100% { transform: translate(-45px, 35px); }
+            50% { transform: translate(0px, 0px) scale(1.15); }
+          }
+        </style>
+      </div>
+
+      <button id="btnGotIt" class="w-full py-3 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-600 text-white font-extrabold text-base btn-3d">
+        <span id="lblBtnGotIt">Faham! Mula Meneroka</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Floating Drag Proxy (Follows Pointer smoothly during pointer drag) -->
+  <div id="dragGhostProxy" class="fixed pointer-events-none z-50 transform -translate-x-1/2 -translate-y-1/2 hidden will-change-transform">
+    <div id="dragGhostContent" class="w-20 h-20 sm:w-24 sm:h-24 drop-shadow-2xl"></div>
+  </div>
+
+  <!-- Fixed Kindergarten Footer (Strictly UNCHANGED & Pinned to Bottom on every screen) -->
+  <footer id="mainFooter" style="position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important; width: 100% !important; z-index: 9999 !important; background-color: #16103C !important; color: #FCD34D !important; border-top: 4px solid #F59E0B !important; height: 38px !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 13px !important; font-weight: 700 !important; letter-spacing: 0.05em !important; box-shadow: 0 -4px 16px rgba(0,0,0,0.6) !important;" class="py-1 px-4 text-center select-none">
+    Kinder Klub | All Rights Reserved
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT ENGINE: ASSET SYSTEM, POINTER DRAG, SYNTHETIC AUDIO & STATE   -->
+  <!-- ========================================================================= -->
+  <script>
+    // Localization dictionary (Full BM & English, strictly no mixed language, zero emoji)
+    const i18n = {
+      ms: {
+        brand: "Anggota Badan Adventure",
+        subBrand: "Padankan Anggota Badan",
+        startPlaying: "Mula Main",
+        playerProfile: "Profil Pemain",
+        familyCode: "Kod Keluarga",
+        studentProfile: "Profil Murid",
+        collection: "Koleksi",
+        chooseGame: "Pilih Permainan",
+        chooseSub: "Pilih bilangan soalan yang ingin diterokai!",
+        opt5Q: "5 Soalan",
+        opt10Q: "10 Soalan",
+        opt20Q: "20 Soalan",
+        optFree: "Main Bebas",
+        backHome: "Kembali ke Laman Utama",
+        soalan: "Soalan",
+        skor: "Skor:",
+        trayTitle: "Pilih & Seret Anggota Badan:",
+        accessibleHelp: "(Boleh tekan kad lalu tekan sasaran)",
+        congratsTitle: "Syabas! Anda Berjaya!",
+        congratsSub: "Pengembaraan selesai dengan cemerlang!",
+        totalScore: "Jumlah Skor",
+        accuracy: "Ketepatan",
+        playAgain: "Main Lagi",
+        collectionHeading: "Koleksi Anggota Badan",
+        collectionSub: "Terokai aset pembelajaran pengembaraan!",
+        close: "Tutup",
+        howToPlay: "Cara Main",
+        howToInstruction: "Seret anggota badan ke tempat yang betul!",
+        btnGotIt: "Faham! Mula Meneroka",
+        placeholderStudent: "Nama Murid (Biar kosong jika tiada)",
+        placeholderFamily: "Kod Keluarga (Pilihan)",
+        statsHeader: "Statistik Permainan",
+        statGames: "Permainan Dimainkan:",
+        statAnswered: "Soalan Dijawab:",
+        statCorrect: "Jawapan Betul:",
+        statBest: "Skor Terbaik:",
+        statAcc: "Ketepatan:",
+        historyTitle: "Sejarah Keluarga & Aktiviti Terkini",
+        emptyHistory: "Tiada aktiviti direkodkan lagi.",
+        btnSave: "Simpan Profil",
+        tryAgainMsg: "Cuba lagi!",
+        correctSpeech: ["Hebat!", "Tahniah!", "Tepat sekali!", "Pintar!"],
+        mistakeSpeech: ["Cuba lagi!", "Hampir betul!", "Jangan putus asa!"],
+        bodyParts: {
+          head: "Kepala",
+          hair: "Rambut",
+          eyes: "Mata",
+          ears: "Telinga",
+          nose: "Hidung",
+          mouth: "Mulut",
+          cheeks: "Pipi",
+          neck: "Leher",
+          shoulders: "Bahu",
+          arm: "Lengan",
+          hand: "Tangan",
+          fingers: "Jari",
+          tummy: "Perut",
+          leg: "Kaki",
+          knee: "Lutut",
+          feet: "Tapak Kaki",
+          toes: "Jari Kaki",
+          heel: "Tumit",
+          elbow: "Siku",
+          palm: "Tapak Tangan",
+          forehead: "Dahi",
+          eyebrow: "Kening",
+          chin: "Dagu"
+        },
+        dragInstruction: (part) => `Seret ${part} ke tempat yang betul!`
+      },
+      en: {
+        brand: "Body Explorer Adventure",
+        subBrand: "Match the Body Part",
+        startPlaying: "Start Playing",
+        playerProfile: "Player Profile",
+        familyCode: "Family Code",
+        studentProfile: "Student Profile",
+        collection: "Collection",
+        chooseGame: "Choose a Game",
+        chooseSub: "Choose how many questions to explore!",
+        opt5Q: "5 Questions",
+        opt10Q: "10 Questions",
+        opt20Q: "20 Questions",
+        optFree: "Free Play",
+        backHome: "Back to Home",
+        soalan: "Question",
+        skor: "Score:",
+        trayTitle: "Choose & Drag Body Part:",
+        accessibleHelp: "(Tap a card then tap the target)",
+        congratsTitle: "Well Done! You Did It!",
+        congratsSub: "Adventure completed with great success!",
+        totalScore: "Total Score",
+        accuracy: "Accuracy",
+        playAgain: "Play Again",
+        collectionHeading: "Body Part Collection",
+        collectionSub: "Explore the shared adventure assets!",
+        close: "Close",
+        howToPlay: "How to Play",
+        howToInstruction: "Drag the body part to the right place!",
+        btnGotIt: "Got It! Start Exploring",
+        placeholderStudent: "Student Name (Leave blank if none)",
+        placeholderFamily: "Family Code (Optional)",
+        statsHeader: "Game Statistics",
+        statGames: "Games Played:",
+        statAnswered: "Questions Answered:",
+        statCorrect: "Correct Answers:",
+        statBest: "Best Score:",
+        statAcc: "Accuracy:",
+        historyTitle: "Family History & Recent Activity",
+        emptyHistory: "No activity recorded yet.",
+        btnSave: "Save Profile",
+        tryAgainMsg: "Try again!",
+        correctSpeech: ["Great!", "Awesome!", "Spot on!", "Super!"],
+        mistakeSpeech: ["Try again!", "Almost there!", "Keep trying!"],
+        bodyParts: {
+          head: "Head",
+          hair: "Hair",
+          eyes: "Eyes",
+          ears: "Ears",
+          nose: "Nose",
+          mouth: "Mouth",
+          cheeks: "Cheeks",
+          neck: "Neck",
+          shoulders: "Shoulders",
+          arm: "Arm",
+          hand: "Hand",
+          fingers: "Fingers",
+          tummy: "Tummy",
+          leg: "Leg",
+          knee: "Knee",
+          feet: "Feet",
+          toes: "Toes",
+          heel: "Heel",
+          elbow: "Elbow",
+          palm: "Palm",
+          forehead: "Forehead",
+          eyebrow: "Eyebrow",
+          chin: "Chin"
+        },
+        dragInstruction: (part) => `Drag the ${part.toLowerCase()} to the right place!`
+      }
+    };
+
+    // Web Audio Synthesizer (No external sound files, pure procedural audio)
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+        this.enabled = true;
+      }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) {
+            this.ctx = new AudioContext();
+          }
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+      playTone(freq, type = 'sine', duration = 0.15, gainVal = 0.18) {
+        if (!this.enabled) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {
+          console.warn("Audio play error", e);
+        }
+      }
+      playClick() {
+        this.playTone(600, 'triangle', 0.08, 0.12);
+      }
+      playCorrect() {
+        // Cheerful rising 3-tone arpeggio
+        if (!this.enabled) return;
+        this.init();
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+          setTimeout(() => {
+            this.playTone(freq, 'sine', 0.22, 0.2);
+          }, idx * 75);
+        });
+      }
+      playWrong() {
+        // Soft friendly wobble boop
+        if (!this.enabled) return;
+        this.init();
+        this.playTone(280, 'sine', 0.18, 0.15);
+        setTimeout(() => this.playTone(220, 'triangle', 0.24, 0.15), 120);
+      }
+      playFanfare() {
+        // Victory fanfare
+        if (!this.enabled) return;
+        this.init();
+        const chords = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+        chords.forEach((freq, idx) => {
+          setTimeout(() => {
+            this.playTone(freq, 'triangle', 0.35, 0.22);
+          }, idx * 100);
+        });
+      }
+    }
+    const audio = new SoundEngine();
+
+    // SHARED 41 AI ASSET SYSTEM (Supplied High-Resolution AI Assets)
+    const ASSET_URLS = {
+      boyCharacter: "https://imglink.cc/cdn/4JWjWEQSOj.png",
+      girlCharacter: "https://imglink.cc/cdn/yeJBNNVCCO.png",
+      head: "https://imglink.cc/cdn/GbTdh3ZG6d.png",
+      hair: "https://imglink.cc/cdn/oNbdtmNXEI.png",
+      eyes: "https://imglink.cc/cdn/EHxB-Ftrk-.png",
+      ears: "https://imglink.cc/cdn/lReVZ5O2ZY.png",
+      nose: "https://imglink.cc/cdn/sObzN8lcwH.png",
+      mouth: "https://imglink.cc/cdn/ftTBOVVeY-.png",
+      cheeks: "https://imglink.cc/cdn/Rqxp4jtG42.jpeg",
+      neck: "https://imglink.cc/cdn/CLGXhdM7Mf.jpeg",
+      shoulders: "https://imglink.cc/cdn/OFhEDHwsnO.jpeg",
+      arm: "https://imglink.cc/cdn/JXTnQqLOUU.jpeg",
+      hand: "https://imglink.cc/cdn/WAYmZyyvCg.jpeg",
+      fingers: "https://imglink.cc/cdn/wTrysmJu5G.jpeg",
+      tummy: "https://imglink.cc/cdn/bHjrQu3zcA.jpeg",
+      leg: "https://imglink.cc/cdn/SSPe1w4Z3F.jpeg",
+      knee: "https://imglink.cc/cdn/hdRcr4qRgG.jpeg",
+      feet: "https://i.postimg.cc/wTTv85f3/IMG-6277.jpg",
+      toes: "https://i.postimg.cc/BQYvq8kJ/IMG-6278.jpg",
+      mascot: "https://imglink.cc/cdn/Z_MnZXrTV4.png",
+      mascotIdle: "https://imglink.cc/cdn/Dn_mSXYwAR.png",
+      mascotHappy: "https://imglink.cc/cdn/zaiGaVKnBK.png",
+      mascotCorrect: "https://imglink.cc/cdn/rDWftLUyBP.png",
+      mascotThinking: "https://imglink.cc/cdn/TiHc9WBX5h.png",
+      mascotMistake: "https://imglink.cc/cdn/2StPzyGdrl.png",
+      mascotPointing: "https://imglink.cc/cdn/RVsIgjgzKM.png",
+      mascotMagnifying: "https://imglink.cc/cdn/_OcdofJFta.png",
+      mascotExcited: "https://imglink.cc/cdn/zXsJczdIyW.png",
+      mascotCelebration: "https://imglink.cc/cdn/SFEJ1ebHF7.png",
+      magnifyingGlass: "https://imglink.cc/cdn/sbKxVPl2Mn.png",
+      clipboard: "https://imglink.cc/cdn/hzwB7Vslsm.png",
+      displayBoard: "https://i.postimg.cc/Qx4MXBwd/IMG-6332.png",
+      targetMarker: "https://i.postimg.cc/ncBC1VPk/IMG-6331.png",
+      cardBack: "https://i.postimg.cc/Qx1HqNyq/IMG-6333.png",
+      token: "https://i.postimg.cc/rFxK9yP1/IMG-6334.png",
+      heel: "https://imglink.cc/cdn/tu9VDAnOVL.jpeg",
+      elbow: "https://i.postimg.cc/CLPKFZXF/IMG-6314.jpg",
+      palm: "https://i.postimg.cc/YqnSp4Zr/IMG-6311.jpg",
+      forehead: "https://imglink.cc/cdn/T8KY3TqQrE.jpeg",
+      eyebrow: "https://imglink.cc/cdn/uv-1fdM98h.jpeg",
+      chin: "https://imglink.cc/cdn/Rs1b1jOsa8.jpeg"
+    };
+
+    function renderAssetImg(key, extraClass = "") {
+      const url = ASSET_URLS[key] || "";
+      return `<img src="${url}" alt="${key}" class="w-full h-full asset-img ${extraClass}" loading="lazy" />`;
+    }
+
+    const AssetSystem = {
+      boyCharacter: () => `<img src="${ASSET_URLS.boyCharacter}" alt="Karakter Lelaki" class="w-full h-full max-h-[50vh] object-contain pointer-events-none drop-shadow-xl" />`,
+      girlCharacter: () => `<img src="${ASSET_URLS.girlCharacter}" alt="Karakter Perempuan" class="w-full h-full max-h-[50vh] object-contain pointer-events-none drop-shadow-xl" />`,
+      head: () => renderAssetImg('head'),
+      hair: () => renderAssetImg('hair'),
+      eyes: () => renderAssetImg('eyes'),
+      ears: () => renderAssetImg('ears'),
+      nose: () => renderAssetImg('nose'),
+      mouth: () => renderAssetImg('mouth'),
+      cheeks: () => renderAssetImg('cheeks'),
+      neck: () => renderAssetImg('neck'),
+      shoulders: () => renderAssetImg('shoulders'),
+      arm: () => renderAssetImg('arm'),
+      hand: () => renderAssetImg('hand'),
+      fingers: () => renderAssetImg('fingers'),
+      tummy: () => renderAssetImg('tummy'),
+      leg: () => renderAssetImg('leg'),
+      knee: () => renderAssetImg('knee'),
+      feet: () => renderAssetImg('feet'),
+      toes: () => renderAssetImg('toes'),
+      mascot: () => renderAssetImg('mascot'),
+      mascotIdle: () => renderAssetImg('mascotIdle'),
+      mascotHappy: () => renderAssetImg('mascotHappy'),
+      mascotCorrect: () => renderAssetImg('mascotCorrect'),
+      mascotThinking: () => renderAssetImg('mascotThinking'),
+      mascotMistake: () => renderAssetImg('mascotMistake'),
+      mascotPointing: () => renderAssetImg('mascotPointing'),
+      mascotMagnifying: () => renderAssetImg('mascotMagnifying'),
+      mascotExcited: () => renderAssetImg('mascotExcited'),
+      mascotCelebration: () => renderAssetImg('mascotCelebration'),
+      magnifyingGlass: () => renderAssetImg('magnifyingGlass'),
+      clipboard: () => renderAssetImg('clipboard'),
+      displayBoard: () => renderAssetImg('displayBoard'),
+      targetMarker: () => renderAssetImg('targetMarker'),
+      cardBack: () => renderAssetImg('cardBack'),
+      token: () => renderAssetImg('token'),
+      heel: () => renderAssetImg('heel'),
+      elbow: () => renderAssetImg('elbow'),
+      palm: () => renderAssetImg('palm'),
+      forehead: () => renderAssetImg('forehead'),
+      eyebrow: () => renderAssetImg('eyebrow'),
+      chin: () => renderAssetImg('chin')
+    };
+
+    // Anatomical placement relative to Character Frame
+    const TargetData = {
+      head: { x: 50, y: 15, radius: 45, asset: 'head' },
+      hair: { x: 50, y: 10, radius: 45, asset: 'hair' },
+      forehead: { x: 50, y: 14, radius: 32, asset: 'forehead' },
+      eyebrow: { x: 48, y: 17, radius: 28, asset: 'eyebrow' },
+      eyes: { x: 50, y: 20, radius: 32, asset: 'eyes' },
+      ears: { x: 33, y: 21, radius: 30, asset: 'ears' },
+      nose: { x: 50, y: 24, radius: 28, asset: 'nose' },
+      cheeks: { x: 38, y: 24, radius: 28, asset: 'cheeks' },
+      mouth: { x: 50, y: 28, radius: 28, asset: 'mouth' },
+      chin: { x: 50, y: 31, radius: 30, asset: 'chin' },
+      neck: { x: 50, y: 34, radius: 30, asset: 'neck' },
+      shoulders: { x: 50, y: 39, radius: 40, asset: 'shoulders' },
+      arm: { x: 26, y: 46, radius: 35, asset: 'arm' },
+      elbow: { x: 24, y: 50, radius: 34, asset: 'elbow' },
+      hand: { x: 20, y: 58, radius: 35, asset: 'hand' },
+      palm: { x: 20, y: 58, radius: 34, asset: 'palm' },
+      fingers: { x: 20, y: 62, radius: 35, asset: 'fingers' },
+      tummy: { x: 50, y: 50, radius: 42, asset: 'tummy' },
+      leg: { x: 38, y: 70, radius: 38, asset: 'leg' },
+      knee: { x: 38, y: 74, radius: 35, asset: 'knee' },
+      feet: { x: 36, y: 90, radius: 38, asset: 'feet' },
+      heel: { x: 32, y: 92, radius: 35, asset: 'heel' },
+      toes: { x: 42, y: 92, radius: 35, asset: 'toes' }
+    };
+
+    const BodyPartKeys = Object.keys(TargetData);
+
+    // LocalStorage Configuration
+    const STORAGE_KEY = "kinderKlub_anggotaBadan_playerProfile";
+
+    let appState = {
+      lang: 'ms',
+      activeScreen: 'viewHome',
+      sessionMode: '5', // '5', '10', '20', 'free'
+      totalQuestions: 5,
+      currentQuestionIdx: 0,
+      score: 0,
+      correctCount: 0,
+      answeredCount: 0,
+      currentChar: 'boy', // 'boy' or 'girl'
+      currentTask: null, // target key
+      usedTasksInSession: [],
+      choices: [], // 4 keys
+      selectedChoiceKey: null, // for accessible non-drag alternative
+      // Saved Profiles (Default completely blank)
+      playerProfile: {
+        studentName: "",
+        familyCode: "",
+        gamesPlayed: 0,
+        questionsAnswered: 0,
+        correctAnswers: 0,
+        bestScore: 0,
+        history: []
+      }
+    };
+
+    // Load persisted state
+    function loadSavedProfile() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            appState.playerProfile = { ...appState.playerProfile, ...parsed };
+            if (parsed.lang) appState.lang = parsed.lang;
+          }
+        }
+      } catch (e) {
+        console.warn("Storage load error", e);
+      }
+    }
+
+    function saveProfile() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          ...appState.playerProfile,
+          lang: appState.lang
+        }));
+      } catch (e) {
+        console.warn("Storage save error", e);
+      }
+    }
+
+    loadSavedProfile();
+
+    function setLanguage(newLang) {
+      appState.lang = newLang;
+      document.documentElement.lang = newLang;
+      const dict = i18n[newLang];
+
+      // Update button toggle text
+      document.getElementById('lblLangActive').textContent = newLang === 'ms' ? 'EN' : 'BM';
+
+      // Header labels
+      document.getElementById('lblHeaderBrand').textContent = dict.brand;
+      document.getElementById('lblHeaderSub').textContent = dict.subBrand;
+
+      // Home Screen
+      document.getElementById('homeTitle').textContent = dict.brand;
+      document.getElementById('homeSubtitle').textContent = dict.subBrand;
+      document.getElementById('lblBtnStart').textContent = dict.startPlaying;
+      document.getElementById('lblBtnProfile').textContent = dict.playerProfile;
+      document.getElementById('lblBtnFamily').textContent = dict.familyCode;
+      document.getElementById('lblBtnStudent').textContent = dict.studentProfile;
+      document.getElementById('lblBtnCollection').textContent = dict.collection;
+
+      // Session Screen
+      document.getElementById('lblChooseGame').textContent = dict.chooseGame;
+      document.getElementById('lblChooseSub').textContent = dict.chooseSub;
+      document.querySelectorAll('[data-i18n-key="opt5Q"]').forEach(el => el.textContent = dict.opt5Q);
+      document.querySelectorAll('[data-i18n-key="opt10Q"]').forEach(el => el.textContent = dict.opt10Q);
+      document.querySelectorAll('[data-i18n-key="opt20Q"]').forEach(el => el.textContent = dict.opt20Q);
+      document.querySelectorAll('[data-i18n-key="optFree"]').forEach(el => el.textContent = dict.optFree);
+      document.getElementById('lblBackHome').textContent = dict.backHome;
+
+      // Gameplay HUD & Tray
+      document.getElementById('lblScoreTitle').textContent = dict.skor;
+      document.getElementById('lblTrayTitle').textContent = dict.trayTitle;
+      document.getElementById('lblAccessibleHelp').textContent = dict.accessibleHelp;
+      updateQuestionBanner();
+
+      // Results Screen
+      document.getElementById('lblResultTitle').textContent = dict.congratsTitle;
+      document.getElementById('lblResultSub').textContent = dict.congratsSub;
+      document.getElementById('lblResScore').textContent = dict.totalScore;
+      document.getElementById('lblResAccuracy').textContent = dict.accuracy;
+      document.getElementById('lblBtnPlayAgain').textContent = dict.playAgain;
+      document.getElementById('lblBtnResultHome').textContent = dict.backHome;
+
+      // Collection Screen
+      document.getElementById('lblCollectionHeading').textContent = dict.collectionHeading;
+      document.getElementById('lblCollectionSub').textContent = dict.collectionSub;
+      document.getElementById('lblBtnCloseCol').textContent = dict.close;
+
+      // Modals
+      document.getElementById('lblProfileModalTitle').textContent = dict.playerProfile;
+      document.getElementById('lblInputStudentName').textContent = dict.studentProfile;
+      document.getElementById('lblInputFamilyCode').textContent = dict.familyCode;
+      document.getElementById('inputStudentName').placeholder = dict.placeholderStudent;
+      document.getElementById('inputFamilyCode').placeholder = dict.placeholderFamily;
+      document.getElementById('lblStatsHeader').textContent = dict.statsHeader;
+      document.getElementById('lblStatGames').textContent = dict.statGames;
+      document.getElementById('lblStatAnswered').textContent = dict.statAnswered;
+      document.getElementById('lblStatCorrect').textContent = dict.statCorrect;
+      document.getElementById('lblStatBest').textContent = dict.statBest;
+      document.getElementById('lblStatAcc').textContent = dict.statAcc;
+      document.getElementById('lblHistoryTitle').textContent = dict.historyTitle;
+      document.getElementById('lblBtnSaveProfile').textContent = dict.btnSave;
+      document.getElementById('lblHowToHeading').textContent = dict.howToPlay;
+      document.getElementById('lblHowToInstruction').textContent = dict.howToInstruction;
+      document.getElementById('lblBtnGotIt').textContent = dict.btnGotIt;
+
+      // Refresh Collections and Profile display
+      renderCollectionItems();
+      renderProfileStats();
+      saveProfile();
+    }
+
+    function showScreen(screenId) {
+      const screens = ['viewHome', 'viewSessionSelect', 'viewGameplay', 'viewResult', 'viewCollection'];
+      screens.forEach(id => {
+        const el = document.getElementById(id);
+        if (id === screenId) {
+          el.classList.remove('view-hidden');
+        } else {
+          el.classList.add('view-hidden');
+        }
+      });
+      appState.activeScreen = screenId;
+    }
+
+    function setMascotReaction(type, speechText = null) {
+      const frame = document.getElementById('mascotFrame');
+      const bubble = document.getElementById('mascotBubble');
+      const speechSpan = document.getElementById('mascotSpeechText');
+
+      let html = AssetSystem.mascot();
+      if (type === 'happy') html = AssetSystem.mascotHappy();
+      else if (type === 'correct') html = AssetSystem.mascotCorrect();
+      else if (type === 'thinking') html = AssetSystem.mascotThinking();
+      else if (type === 'mistake') html = AssetSystem.mascotMistake();
+      else if (type === 'pointing') html = AssetSystem.mascotPointing();
+      else if (type === 'magnifying') html = AssetSystem.mascotMagnifying();
+      else if (type === 'excited') html = AssetSystem.mascotExcited();
+      else if (type === 'celebration') html = AssetSystem.mascotCelebration();
+
+      frame.innerHTML = html;
+
+      if (speechText) {
+        speechSpan.textContent = speechText;
+        bubble.style.opacity = '1';
+        clearTimeout(frame._bubbleTimer);
+        frame._bubbleTimer = setTimeout(() => {
+          bubble.style.opacity = '0';
+        }, 2200);
+      }
+    }
+
+    // Generates genuine randomized matching task with no immediate duplicate within session
+    function generateTask() {
+      // Alternate character randomly (Boy / Girl)
+      appState.currentChar = Math.random() > 0.5 ? 'boy' : 'girl';
+      const stage = document.getElementById('characterStage');
+      stage.innerHTML = appState.currentChar === 'boy' ? AssetSystem.boyCharacter() : AssetSystem.girlCharacter();
+
+      // Filter available body parts not yet asked in current session
+      let candidatePool = BodyPartKeys.filter(k => !appState.usedTasksInSession.includes(k));
+      if (candidatePool.length === 0) {
+        appState.usedTasksInSession = [];
+        candidatePool = [...BodyPartKeys];
+      }
+
+      // Pick target body part
+      const targetKey = candidatePool[Math.floor(Math.random() * candidatePool.length)];
+      appState.currentTask = targetKey;
+      appState.usedTasksInSession.push(targetKey);
+
+      // Pick 3 distractors
+      const distractors = BodyPartKeys.filter(k => k !== targetKey);
+      shuffleArray(distractors);
+      const roundChoices = [targetKey, distractors[0], distractors[1], distractors[2]];
+      shuffleArray(roundChoices);
+      appState.choices = roundChoices;
+      appState.selectedChoiceKey = null;
+
+      // Position target marker on character
+      positionTargetMarker(targetKey);
+
+      // Render choice cards in tray
+      renderChoices();
+
+      // Update instructions and mascot reaction
+      updateQuestionBanner();
+      setMascotReaction('pointing');
+    }
+
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+    }
+
+    function positionTargetMarker(targetKey) {
+      const data = TargetData[targetKey];
+      const targetHit = document.getElementById('targetHitArea');
+      const markerVisual = document.getElementById('targetMarkerVisual');
+      markerVisual.innerHTML = AssetSystem.targetMarker();
+
+      targetHit.style.left = `${data.x}%`;
+      targetHit.style.top = `${data.y}%`;
+      targetHit.style.transform = 'translate(-50%, -50%)';
+      targetHit.setAttribute('aria-label', `Sasaran ${i18n[appState.lang].bodyParts[targetKey]}`);
+    }
+
+    function updateQuestionBanner() {
+      if (!appState.currentTask) return;
+      const dict = i18n[appState.lang];
+      const partName = dict.bodyParts[appState.currentTask];
+      document.getElementById('lblInstruction').textContent = dict.dragInstruction(partName);
+
+      if (appState.sessionMode === 'free') {
+        document.getElementById('hudProgressBadge').textContent = '∞';
+        document.getElementById('hudProgressText').textContent = `${dict.soalan} ${appState.currentQuestionIdx + 1}`;
+      } else {
+        document.getElementById('hudProgressBadge').textContent = `Q${appState.currentQuestionIdx + 1}`;
+        document.getElementById('hudProgressText').textContent = `${dict.soalan} ${appState.currentQuestionIdx + 1} / ${appState.totalQuestions}`;
+      }
+      document.getElementById('hudScoreVal').textContent = appState.score;
+    }
+
+    function renderChoices() {
+      const container = document.getElementById('choicesContainer');
+      container.innerHTML = '';
+
+      appState.choices.forEach((partKey) => {
+        const card = document.createElement('div');
+        card.className = "choice-card relative flex flex-col items-center justify-center p-2 rounded-2xl bg-white border-2 border-purple-200 shadow-md cursor-grab active:cursor-grabbing hover:border-amber-400 hover:scale-105 transition-all select-none focus:outline-none focus:ring-4 focus:ring-amber-400";
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('data-part-key', partKey);
+        card.setAttribute('aria-label', i18n[appState.lang].bodyParts[partKey]);
+
+        // Asset artwork SVG container
+        const art = document.createElement('div');
+        art.className = "w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center pointer-events-none";
+        art.innerHTML = AssetSystem[TargetData[partKey].asset]();
+
+        // Label name
+        const label = document.createElement('span');
+        label.className = "text-xs font-black text-purple-950 mt-1 pointer-events-none text-center truncate max-w-full";
+        label.textContent = i18n[appState.lang].bodyParts[partKey];
+
+        card.appendChild(art);
+        card.appendChild(label);
+
+        // Attach genuine Pointer Events for Drag & Drop
+        attachPointerDrag(card, partKey);
+
+        // Accessible non-drag keyboard / click alternative
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            selectAccessibleChoice(partKey, card);
+          }
+        });
+        card.addEventListener('click', (e) => {
+          // If clicked without dragging, select for accessible tap-to-target option
+          if (!card._wasDragged) {
+            selectAccessibleChoice(partKey, card);
+          }
+          card._wasDragged = false;
+        });
+
+        container.appendChild(card);
+      });
+    }
+
+    // Accessible selection alternative
+    function selectAccessibleChoice(partKey, cardEl) {
+      document.querySelectorAll('.choice-card').forEach(c => c.classList.remove('ring-4', 'ring-pink-500', 'bg-pink-50'));
+      appState.selectedChoiceKey = partKey;
+      cardEl.classList.add('ring-4', 'ring-pink-500', 'bg-pink-50');
+      audio.playClick();
+    }
+
+    // Target Hit Area accessible tap/click handler
+    document.getElementById('targetHitArea').addEventListener('click', () => {
+      if (appState.selectedChoiceKey) {
+        evaluateDrop(appState.selectedChoiceKey, null);
+      }
+    });
+    document.getElementById('targetHitArea').addEventListener('keydown', (e) => {
+      if ((e.key === 'Enter' || e.key === ' ') && appState.selectedChoiceKey) {
+        e.preventDefault();
+        evaluateDrop(appState.selectedChoiceKey, null);
+      }
+    });
+
+    // True Drag interaction supporting Touch, Stylus and Mouse seamlessly
+    function attachPointerDrag(cardEl, partKey) {
+      let isDragging = false;
+      let startX = 0, startY = 0;
+      const proxy = document.getElementById('dragGhostProxy');
+      const proxyContent = document.getElementById('dragGhostContent');
+
+      cardEl.addEventListener('pointerdown', (e) => {
+        // Only primary pointer
+        if (e.button !== 0 && e.pointerType === 'mouse') return;
+        cardEl.setPointerCapture(e.pointerId);
+        isDragging = false;
+        cardEl._wasDragged = false;
+        startX = e.clientX;
+        startY = e.clientY;
+
+        const onPointerMove = (moveEvent) => {
+          const dx = moveEvent.clientX - startX;
+          const dy = moveEvent.clientY - startY;
+          if (!isDragging && Math.hypot(dx, dy) > 8) {
+            isDragging = true;
+            cardEl._wasDragged = true;
+            // Activate floating drag proxy
+            proxyContent.innerHTML = AssetSystem[TargetData[partKey].asset]();
+            proxy.classList.remove('hidden');
+            cardEl.style.opacity = '0.35';
+          }
+          if (isDragging) {
+            proxy.style.left = `${moveEvent.clientX}px`;
+            proxy.style.top = `${moveEvent.clientY}px`;
+          }
+        };
+
+        const onPointerUp = (upEvent) => {
+          cardEl.removeEventListener('pointermove', onPointerMove);
+          cardEl.removeEventListener('pointerup', onPointerUp);
+          cardEl.removeEventListener('pointercancel', onPointerUp);
+          try {
+            cardEl.releasePointerCapture(e.pointerId);
+          } catch (_) {}
+
+          if (isDragging) {
+            proxy.classList.add('hidden');
+            cardEl.style.opacity = '1';
+            isDragging = false;
+            // Check if dropped within generous target zone
+            checkDropZone(upEvent.clientX, upEvent.clientY, partKey, cardEl);
+          }
+        };
+
+        cardEl.addEventListener('pointermove', onPointerMove);
+        cardEl.addEventListener('pointerup', onPointerUp);
+        cardEl.addEventListener('pointercancel', onPointerUp);
+      });
+    }
+
+    // Generous invisible hit zone detection
+    function checkDropZone(clientX, clientY, droppedKey, cardEl) {
+      const targetHit = document.getElementById('targetHitArea');
+      const rect = targetHit.getBoundingClientRect();
+
+      // Generous hit radius expanding 50px beyond visible marker
+      const hitPadding = 55;
+      const withinBounds = (
+        clientX >= (rect.left - hitPadding) &&
+        clientX <= (rect.right + hitPadding) &&
+        clientY >= (rect.top - hitPadding) &&
+        clientY <= (rect.bottom + hitPadding)
+      );
+
+      if (withinBounds) {
+        evaluateDrop(droppedKey, cardEl);
+      } else {
+        // Dropped outside -> Smoothly return asset with gentle wobble
+        audio.playWrong();
+        triggerWobbleReturn(cardEl);
+      }
+    }
+
+    function triggerWobbleReturn(cardEl) {
+      if (!cardEl) return;
+      cardEl.classList.add('wobble-feedback');
+      setTimeout(() => {
+        cardEl.classList.remove('wobble-feedback');
+      }, 550);
+    }
+
+    function evaluateDrop(droppedKey, cardEl) {
+      appState.answeredCount++;
+      appState.playerProfile.questionsAnswered++;
+
+      if (droppedKey === appState.currentTask) {
+        // === CORRECT ANSWER ===
+        appState.score += 10;
+        appState.correctCount++;
+        appState.playerProfile.correctAnswers++;
+        if (appState.score > appState.playerProfile.bestScore) {
+          appState.playerProfile.bestScore = appState.score;
+        }
+
+        audio.playCorrect();
+
+        // Visual snap feedback on child character
+        const snapZone = document.getElementById('snapFeedbackZone');
+        const targetHit = document.getElementById('targetHitArea');
+        snapZone.style.left = targetHit.style.left;
+        snapZone.style.top = targetHit.style.top;
+        snapZone.style.transform = 'translate(-50%, -50%)';
+        snapZone.className = "absolute z-30 pointer-events-none snap-pop opacity-100";
+        snapZone.innerHTML = `
+          <div class="w-16 h-16 sm:w-20 sm:h-20 drop-shadow-xl filter drop-shadow(0 0 12px #00FFF2)">
+            ${AssetSystem[TargetData[droppedKey].asset]()}
+          </div>
+        `;
+
+        // Mascot correct reaction & random praise
+        const praises = i18n[appState.lang].correctSpeech;
+        const randomPraise = praises[Math.floor(Math.random() * praises.length)];
+        setMascotReaction('correct', randomPraise);
+
+        // Update score HUD
+        document.getElementById('hudScoreVal').textContent = appState.score;
+
+        // Auto-advance to next question after short snap celebration
+        setTimeout(() => {
+          snapZone.className = "absolute z-30 pointer-events-none opacity-0";
+          snapZone.innerHTML = '';
+          advanceRound();
+        }, 1100);
+
+      } else {
+        // === WRONG ANSWER ===
+        // Gentle feedback, friendly mascot Mistake reaction, no deduction, no life loss
+        audio.playWrong();
+        const mistakes = i18n[appState.lang].mistakeSpeech;
+        const randomMistake = mistakes[Math.floor(Math.random() * mistakes.length)];
+        setMascotReaction('mistake', randomMistake);
+        triggerWobbleReturn(cardEl);
+      }
+    }
+
+    function advanceRound() {
+      appState.currentQuestionIdx++;
+
+      if (appState.sessionMode !== 'free' && appState.currentQuestionIdx >= appState.totalQuestions) {
+        // Session Finished -> Show Results Screen
+        finishSession();
+      } else {
+        // Generate next fresh task
+        generateTask();
+      }
+    }
+
+    function finishSession() {
+      appState.playerProfile.gamesPlayed++;
+      // Calculate accuracy
+      const acc = appState.answeredCount > 0
+        ? Math.round((appState.correctCount / appState.answeredCount) * 100)
+        : 100;
+
+      // Add to family history
+      const now = new Date();
+      const timeStr = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+      const record = `${appState.sessionMode.toUpperCase()} Qs - Skor: ${appState.score} (${acc}%) [${timeStr}]`;
+      appState.playerProfile.history.unshift(record);
+      if (appState.playerProfile.history.length > 8) appState.playerProfile.history.pop();
+
+      saveProfile();
+
+      // Populate Result Screen
+      document.getElementById('valResScore').textContent = appState.score;
+      document.getElementById('valResAccuracy').textContent = `${acc}%`;
+      document.getElementById('resultMascotSlot').innerHTML = AssetSystem.mascotCelebration();
+
+      audio.playFanfare();
+      showScreen('viewResult');
+    }
+
+    // Renders the exact 41 shared AI assets for visual discovery
+    function renderCollectionItems() {
+      const grid = document.getElementById('collectionGrid');
+      grid.innerHTML = '';
+
+      const items = [
+        { name: "Main Character — Boy", html: AssetSystem.boyCharacter() },
+        { name: "Alternate Character — Girl", html: AssetSystem.girlCharacter() },
+        { name: "Head", html: AssetSystem.head() },
+        { name: "Hair", html: AssetSystem.hair() },
+        { name: "Eyes", html: AssetSystem.eyes() },
+        { name: "Ears", html: AssetSystem.ears() },
+        { name: "Nose", html: AssetSystem.nose() },
+        { name: "Mouth", html: AssetSystem.mouth() },
+        { name: "Cheeks", html: AssetSystem.cheeks() },
+        { name: "Neck", html: AssetSystem.neck() },
+        { name: "Shoulders", html: AssetSystem.shoulders() },
+        { name: "Arm", html: AssetSystem.arm() },
+        { name: "Hand", html: AssetSystem.hand() },
+        { name: "Fingers", html: AssetSystem.fingers() },
+        { name: "Tummy", html: AssetSystem.tummy() },
+        { name: "Leg", html: AssetSystem.leg() },
+        { name: "Knee", html: AssetSystem.knee() },
+        { name: "Feet", html: AssetSystem.feet() },
+        { name: "Toes", html: AssetSystem.toes() },
+        { name: "Explorer Mascot", html: AssetSystem.mascot() },
+        { name: "Mascot Reaction — Idle", html: AssetSystem.mascotIdle() },
+        { name: "Mascot Reaction — Happy Discovery", html: AssetSystem.mascotHappy() },
+        { name: "Mascot Reaction — Correct", html: AssetSystem.mascotCorrect() },
+        { name: "Mascot Reaction — Thinking", html: AssetSystem.mascotThinking() },
+        { name: "Mascot Reaction — Mistake", html: AssetSystem.mascotMistake() },
+        { name: "Mascot Reaction — Pointing", html: AssetSystem.mascotPointing() },
+        { name: "Mascot Reaction — Magnifying Glass", html: AssetSystem.mascotMagnifying() },
+        { name: "Mascot Reaction — Excited", html: AssetSystem.mascotExcited() },
+        { name: "Mascot Reaction — Celebration", html: AssetSystem.mascotCelebration() },
+        { name: "Magnifying Glass", html: AssetSystem.magnifyingGlass() },
+        { name: "Explorer Clipboard", html: AssetSystem.clipboard() },
+        { name: "Body-Part Display Board", html: AssetSystem.displayBoard() },
+        { name: "Target Marker", html: AssetSystem.targetMarker() },
+        { name: "Memory Card Back", html: AssetSystem.cardBack() },
+        { name: "Counting Token", html: AssetSystem.token() },
+        { name: "Heel", html: AssetSystem.heel() },
+        { name: "Elbow", html: AssetSystem.elbow() },
+        { name: "Palm", html: AssetSystem.palm() },
+        { name: "Forehead", html: AssetSystem.forehead() },
+        { name: "Eyebrow", html: AssetSystem.eyebrow() },
+        { name: "Chin", html: AssetSystem.chin() }
+      ];
+
+      items.forEach((item) => {
+        const card = document.createElement('div');
+        card.className = "flex flex-col items-center justify-center p-3 rounded-2xl bg-white border-2 border-purple-200 shadow hover:shadow-lg transition-shadow";
+        card.innerHTML = `
+          <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
+            ${item.html}
+          </div>
+          <span class="text-xs font-bold text-purple-950 mt-2 text-center">${item.name}</span>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderProfileStats() {
+      const p = appState.playerProfile;
+      document.getElementById('inputStudentName').value = p.studentName || "";
+      document.getElementById('inputFamilyCode').value = p.familyCode || "";
+      document.getElementById('valStatGames').textContent = p.gamesPlayed;
+      document.getElementById('valStatAnswered').textContent = p.questionsAnswered;
+      document.getElementById('valStatCorrect').textContent = p.correctAnswers;
+      document.getElementById('valStatBest').textContent = p.bestScore;
+
+      const acc = p.questionsAnswered > 0
+        ? Math.round((p.correctAnswers / p.questionsAnswered) * 100)
+        : 0;
+      document.getElementById('valStatAcc').textContent = `${acc}%`;
+
+      const histContainer = document.getElementById('historyListContainer');
+      histContainer.innerHTML = '';
+      if (!p.history || p.history.length === 0) {
+        histContainer.innerHTML = `<p class="italic text-slate-400">${i18n[appState.lang].emptyHistory}</p>`;
+      } else {
+        p.history.forEach(item => {
+          const row = document.createElement('div');
+          row.className = "py-1 px-2 bg-white rounded-lg border border-purple-100 font-semibold";
+          row.textContent = item;
+          histContainer.appendChild(row);
+        });
+      }
+    }
+
+    // Setup Navigation and Interaction Listeners
+    function setupEventListeners() {
+      // Audio toggle
+      document.getElementById('btnAudioToggle').addEventListener('click', () => {
+        audio.enabled = !audio.enabled;
+        document.getElementById('iconAudioOn').classList.toggle('hidden', !audio.enabled);
+        document.getElementById('iconAudioOff').classList.toggle('hidden', audio.enabled);
+        if (audio.enabled) audio.playClick();
+      });
+
+      // Language Switcher
+      document.getElementById('btnLangToggle').addEventListener('click', () => {
+        audio.playClick();
+        setLanguage(appState.lang === 'ms' ? 'en' : 'ms');
+      });
+
+      // How to Play modal
+      document.getElementById('btnHowToPlay').addEventListener('click', () => {
+        audio.playClick();
+        document.getElementById('modalHowToPlay').classList.remove('hidden');
+      });
+      document.getElementById('btnCloseHowToModal').addEventListener('click', () => {
+        audio.playClick();
+        document.getElementById('modalHowToPlay').classList.add('hidden');
+      });
+      document.getElementById('btnGotIt').addEventListener('click', () => {
+        audio.playClick();
+        document.getElementById('modalHowToPlay').classList.add('hidden');
+      });
+
+      // Header Brand return to home
+      document.getElementById('btnHeaderHome').addEventListener('click', () => {
+        audio.playClick();
+        showScreen('viewHome');
+      });
+
+      // Home Nav Buttons
+      document.getElementById('btnStartPlaying').addEventListener('click', () => {
+        audio.playClick();
+        showScreen('viewSessionSelect');
+      });
+
+      const openProfileModal = () => {
+        audio.playClick();
+        renderProfileStats();
+        document.getElementById('modalProfile').classList.remove('hidden');
+      };
+
+      document.getElementById('btnNavProfile').addEventListener('click', openProfileModal);
+      document.getElementById('btnNavFamily').addEventListener('click', openProfileModal);
+      document.getElementById('btnNavStudent').addEventListener('click', openProfileModal);
+
+      document.getElementById('btnCloseProfileModal').addEventListener('click', () => {
+        audio.playClick();
+        document.getElementById('modalProfile').classList.add('hidden');
+      });
+
+      document.getElementById('btnSaveProfile').addEventListener('click', () => {
+        audio.playClick();
+        appState.playerProfile.studentName = document.getElementById('inputStudentName').value.trim();
+        appState.playerProfile.familyCode = document.getElementById('inputFamilyCode').value.trim();
+        saveProfile();
+        document.getElementById('modalProfile').classList.add('hidden');
+      });
+
+      // Collection View
+      document.getElementById('btnNavCollection').addEventListener('click', () => {
+        audio.playClick();
+        renderCollectionItems();
+        showScreen('viewCollection');
+      });
+      document.getElementById('btnCloseCollection').addEventListener('click', () => {
+        audio.playClick();
+        showScreen('viewHome');
+      });
+
+      // Session Selection Mode triggers
+      document.querySelectorAll('.btnSessionOption').forEach(btn => {
+        btn.addEventListener('click', () => {
+          audio.playClick();
+          const mode = btn.getAttribute('data-mode');
+          startNewGame(mode);
+        });
+      });
+
+      document.getElementById('btnBackToHomeFromSession').addEventListener('click', () => {
+        audio.playClick();
+        showScreen('viewHome');
+      });
+
+      // Result Screen Play Again & Home
+      document.getElementById('btnPlayAgain').addEventListener('click', () => {
+        audio.playClick();
+        startNewGame(appState.sessionMode);
+      });
+      document.getElementById('btnResultToHome').addEventListener('click', () => {
+        audio.playClick();
+        showScreen('viewHome');
+      });
+    }
+
+    function startNewGame(mode) {
+      appState.sessionMode = mode;
+      appState.totalQuestions = mode === 'free' ? Infinity : parseInt(mode, 10);
+      appState.currentQuestionIdx = 0;
+      appState.score = 0;
+      appState.correctCount = 0;
+      appState.answeredCount = 0;
+      appState.usedTasksInSession = [];
+
+      generateTask();
+      showScreen('viewGameplay');
+    }
+
+    // App Startup Boot
+    window.addEventListener('load', () => {
+      // Setup Initial Mascot on Home Screen & Clipboard Icon on Session screen
+      document.getElementById('homeMascotSlot').innerHTML = AssetSystem.mascot();
+      document.getElementById('sessionClipboardSlot').innerHTML = AssetSystem.clipboard();
+
+      setupEventListeners();
+      setLanguage(appState.lang);
+      showScreen('viewHome');
+    });
+  </script>
+</body>
+</html>
